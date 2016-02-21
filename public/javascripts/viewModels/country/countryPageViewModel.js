@@ -26,5 +26,16 @@ function CountryPageViewModel(serverModel) {
         });
     };
 
+    self.deleteCountry = function (country) {
+        if (confirm(window.messages.deleteConfirmation)) {
+            waymarkApp.utilities.ajaxHelper.delete({
+                url: window.actions.country.delete.replace('{id}', country.id())
+            }).done(function () {
+                self.countries.remove(country);
+                toastr.success(window.messages.successMessage);
+            });
+        }
+    };
+
     return self;
 };

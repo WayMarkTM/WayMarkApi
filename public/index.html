@@ -16,6 +16,7 @@
                             <th>Id</th>
                             <th>Name</th>
                             <th>Abbreviation</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody data-bind="foreach: countries">
@@ -23,6 +24,9 @@
                             <td data-bind="text: id"></td>
                             <td data-bind="text: name"></td>
                             <td data-bind="text: abbreviation"></td>
+                            <td>
+                                <span class="glyphicon glyphicon-remove" style="color: red" data-bind="click: $parent.deleteCountry"></span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

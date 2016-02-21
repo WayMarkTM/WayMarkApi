@@ -22,4 +22,14 @@ router.post('/', function (req, res) {
     });
 });
 
+router.delete('/:countryId', function (req, res) {
+   models.Country.destroy({
+       where: {
+           id: req.params.countryId
+       }
+   }).then(function () {
+       res.json(true);
+   });
+});
+
 module.exports = router;

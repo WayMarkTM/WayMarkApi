@@ -61,6 +61,9 @@ waymarkApp.utilities.ajaxHelper = (function (jQuery, t) {
         },
         get: function (ajaxOptions, options) {
             return ajax(ajaxOptions, "GET", options);
+        },
+        delete: function (ajaxOptions) {
+            return ajax(ajaxOptions, "DELETE")
         }
     };
 })($, toastr);
