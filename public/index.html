@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.2/toastr.min.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Abbreviation</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: countries">
+                        <tr>
+                            <td data-bind="text: id"></td>
+                            <td data-bind="text: name"></td>
+                            <td data-bind="text: abbreviation"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr/>
+        <div data-bind="with: newCountry">
+            <div class="row">
+                <label class="col-md-3 control-label">Name: </label>
+                <div class="col-md-5">
+                    <input type="text" data-bind="value: name" class="form-control"/>
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-md-3 control-label">Abbreviation: </label>
+                <div class="col-md-5">
+                    <input type="text" data-bind="value: abbreviation" class="form-control"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 col-md-offset-3">
+                    <button type="button" data-bind="click: $parent.addCountry" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.2/toastr.min.js"></script>
+    <script type="text/javascript" src="./javascripts/common.js"></script>
+    <script type="text/javascript" src="./javascripts/utilities.js"></script>
+    <script type="text/javascript" src="./javascripts/viewModels/country/countryPageViewModel.js"></script>
+    <script type="text/javascript" src="./javascripts/viewModels/country/countryViewModel.js"></script>
+    <script type="text/javascript">
+        var viewModel = {};
+        waymarkApp.utilities.ajaxHelper.get({
+            url: window.actions.country.get
+        }).done(function (data) {
+            viewModel = new CountryPageViewModel(data);
+            ko.applyBindings(viewModel);
+        });
+    </script>
+</body>
+</html>
