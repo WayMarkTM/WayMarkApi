@@ -1,22 +1,20 @@
 var models = require('../models')
 var express = require('express');
 var router = express.Router();
+var FileService = require('../services/fileService');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.send('public/index.html');
-  // res.render('index', { title: 'Express' });
+});
+
+router.post('/postmusic', function (req, res, next) {
+  var fileService = new FileService('photo');
+  fileService.upload(req, res);
 });
 
 router.get('/test', function(req, res) {
-  models.Country.findAll({
-    include: [ models.City ]
-  }).then(function(countries) {
-    res.render('test', {
-      title: 'Express',
-      countries: countries
-    });
-  });
+  res.render('test', { title: 'Express' });
 });
 
 module.exports = router;
