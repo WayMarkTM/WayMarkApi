@@ -1,7 +1,7 @@
 /**
  * Created by gromi on 2/21/2016.
  */
-var app = 'http://localhost:3000/';
+var app = 'http://localhost:3000/api/';
     consts = {},
     actions = {},
     messages = {};

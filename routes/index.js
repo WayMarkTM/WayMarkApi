@@ -2,10 +2,11 @@ var models = require('../models')
 var express = require('express');
 var router = express.Router();
 var FileService = require('../services/fileService');
+var path = require('path');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.send('public/index.html');
+router.get('/country', function(req, res, next) {
+  res.sendFile(path.join(__dirname, '../public/pages/country.html'));;
 });
 
 router.post('/postmusic', function (req, res, next) {
