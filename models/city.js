@@ -17,6 +17,7 @@ module.exports = function(sequelize, DataTypes) {
                 City.belongsTo(models.Country, {
                     onDelete: "CASCADE",
                     foreignKey: {
+                        fieldName: 'countryId',
                         allowNull: false
                     }
                 });

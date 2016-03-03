@@ -12,6 +12,12 @@ actions.country = {
     delete: app + 'country/{id}',
 };
 
+actions.city = {
+    get: app + 'city',
+    add: app + 'city',
+    delete: app + 'city/{id}',
+}
+
 messages = {
     errorOccured: 'The request has failed. An error occured.',
     successMessage: 'The request successfully processed.',

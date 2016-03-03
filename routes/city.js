@@ -6,18 +6,22 @@ var router = express.Router();
 var models = require('../models');
 
 router.get('/', function (req, res){
-    models.City.findAll({
-        include:  [ models.Country ]
-    })
+    models.City.findAll()
     .then(function(cities) {
-        res.json(cities);
+        models.Country.findAll()
+            .then(function (countries) {
+                res.json({
+                    cities: cities,
+                    countries: countries
+                });
+            });
     });
 });
 
 router.post('/', function (req, res) {
     models.City.create({
         name: req.body.name,
-        country_id: req.body.countryId
+        countryId: req.body.countryId
     }).then(function (city) {
         res.json(city);
     });

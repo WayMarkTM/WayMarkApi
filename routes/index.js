@@ -9,6 +9,10 @@ router.get('/country', function(req, res, next) {
   res.sendFile(path.join(__dirname, '../public/pages/country.html'));;
 });
 
+router.get('/city', function(req, res, next) {
+  res.sendFile(path.join(__dirname, '../public/pages/city.html'));;
+});
+
 router.post('/postmusic', function (req, res, next) {
   var fileService = new FileService('photo');
   fileService.upload(req, res);
