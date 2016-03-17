@@ -6,6 +6,8 @@ var app = 'http://localhost:3000/api/';
     actions = {},
     messages = {};
 
+actions.auth = app.replace('/api', '') + 'auth';
+
 actions.country = {
     get: app + 'country',
     add: app + 'country',
@@ -29,6 +31,8 @@ messages = {
     successMessage: 'The request successfully processed.',
     deleteConfirmation: 'Are you sure you want to delete this record?',
 };
+
+consts.authCookie = 'auth';
 
 window.actions = actions;
 window.consts = consts;

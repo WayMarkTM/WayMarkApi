@@ -3,9 +3,16 @@ var express = require('express');
 var router = express.Router();
 var FileService = require('../services/fileService');
 var path = require('path');
+var AuthenticationService = require('../services/authenticationService');
 
 router.get('/login',  function(req, res, next) {
+  console.log(require('crypto').createHash('md5').update('test').digest('hex'))
   res.sendFile(path.join(__dirname, '../public/pages/login.html'));
+});
+
+router.post('/auth', function (req, res, next) {
+  var authenticationService = new AuthenticationService();
+  authenticationService.login(req, res);
 });
 
 router.get('/country', function(req, res, next) {

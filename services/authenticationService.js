@@ -36,15 +36,18 @@ AuthenticationService.prototype.login = function (req, res) {
            })
        }
 
-        if (user.accessToken == null || user.accessToken == '') {
-            models.User.updateAttributes({
-                accessToken: uuid.v4()
-            }).on('success', function () {
-                res.json(user.accessToken);
-            })
-        }
-
-        res.json(user.accessToken);
+        var token = uuid.v4();
+        models.User.update({
+            accessToken: token
+        }, {
+            where: {
+                id: user.id
+            }
+        }).then(function (result) {
+            if (result.length > 0) {
+                res.json(token);
+            }
+        });
     });
 };
 
