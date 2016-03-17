@@ -40,7 +40,7 @@ function CityPageViewModel(serverModel) {
             waymarkApp.utilities.ajaxHelper.delete({
                 url: window.actions.city.delete.replace('{id}', city.id())
             }).done(function () {
-                self.countries.remove(city);
+                self.cities.remove(city);
                 toastr.success(window.messages.successMessage);
             });
         }

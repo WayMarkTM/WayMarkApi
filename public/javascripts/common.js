@@ -16,7 +16,13 @@ actions.city = {
     get: app + 'city',
     add: app + 'city',
     delete: app + 'city/{id}',
-}
+};
+
+actions.point = {
+    get: app + 'point',
+    add: app + 'point',
+    delete: app + 'point/{id}'
+};
 
 messages = {
     errorOccured: 'The request has failed. An error occured.',

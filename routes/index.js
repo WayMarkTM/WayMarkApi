@@ -6,11 +6,15 @@ var path = require('path');
 
 /* GET home page. */
 router.get('/country', function(req, res, next) {
-  res.sendFile(path.join(__dirname, '../public/pages/country.html'));;
+  res.sendFile(path.join(__dirname, '../public/pages/country.html'));
 });
 
 router.get('/city', function(req, res, next) {
-  res.sendFile(path.join(__dirname, '../public/pages/city.html'));;
+  res.sendFile(path.join(__dirname, '../public/pages/city.html'));
+});
+
+router.get('/point', function(req, res, next) {
+  res.sendFile(path.join(__dirname, '../public/pages/point.html'));
 });
 
 router.post('/postmusic', function (req, res, next) {

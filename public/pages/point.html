@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Module | Points</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.2/toastr.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" />
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css" />
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Available Languages</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody data-bind="foreach: points">
+                <tr>
+                    <td data-bind="text: id"></td>
+                    <td data-bind="text: latitude"></td>
+                    <td data-bind="text: longitude"></td>
+                    <td data-bind="text: availableLanguages"></td>
+                    <td>
+                        <span class="glyphicon glyphicon-edit" style="color: orange" data-bind="click: $parent.loadPoint"></span>
+                        <span class="glyphicon glyphicon-remove" style="color: red" data-bind="click: $parent.deletePoint"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr/>
+    <div data-bind="with: newPoint">
+        <div class="row">
+            <label class="col-md-3 control-label">Latitude: </label>
+            <div class="col-md-5">
+                <input type="text" data-bind="value: latitude" class="form-control"/>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-md-3 control-label">Longitude: </label>
+            <div class="col-md-5">
+                <input type="text" data-bind="value: longitude" class="form-control"/>
+            </div>
+        </div>
+        <div data-bind="foreach: LocalizedPoints">
+            <div class="row">
+                <label class="col-md-3 control-label">Language: </label>
+                <div class="col-md-5">
+                    <select class="form-control" data-bind="value: language,
+                                   options: $root.languages,
+                                   optionsText: function (item) {
+                                        return item.name;
+                                   },
+                                   optionsValue: function (item) {
+                                        return item.code;
+                                   },
+                                   optionsCaption: 'Select language'"></select>
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-md-3 control-label">Name: </label>
+                <div class="col-md-5">
+                    <input type="text" data-bind="value: name" class="form-control"/>
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-md-3 control-label">Description: </label>
+                <div class="col-md-5">
+                    <textarea data-bind="value: description" rows="5" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-3">
+                <button type="button" data-bind="click: addLocalization" class="btn btn-default">Add Translation</button>
+                <button type="button" data-bind="click: $parent.addPoint" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.2/toastr.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.full.min.js"></script>
+<script type="text/javascript" src="../javascripts/bindings/knockout.select2.js"></script>
+<script type="text/javascript" src="../javascripts/common.js"></script>
+<script type="text/javascript" src="../javascripts/utilities.js"></script>
+<script type="text/javascript" src="../javascripts/viewModels/common/languageViewModel.js"></script>
+<script type="text/javascript" src="../javascripts/viewModels/point/pointViewModel.js"></script>
+<script type="text/javascript" src="../javascripts/viewModels/point/localizedPointViewModel.js"></script>
+<script type="text/javascript" src="../javascripts/viewModels/point/pointPageViewModel.js"></script>
+<script type="text/javascript">
+    var viewModel = {};
+    waymarkApp.utilities.ajaxHelper.get({
+        url: window.actions.point.get
+    }).done(function (data) {
+        viewModel = new PointPageViewModel(data);
+        ko.applyBindings(viewModel);
+    });
+</script>
+</body>
+</html>
