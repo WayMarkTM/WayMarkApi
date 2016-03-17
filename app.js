@@ -4,6 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var BearerStrategy = require('passport-http-bearer').Strategy;
+var models = require('./models');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -62,5 +65,18 @@ app.use(function(err, req, res, next) {
   });
 });
 
+passport.use(new BearerStrategy(function (token, done) {
+  models.User.findOne({
+    where: {
+      accessToken: token
+    }
+  }).then(function (user) {
+    if (user) {
+      return done(null, user, { scope: 'all' })
+    } else {
+      return done(null, false);
+    }
+  })
+}));
 
 module.exports = app;

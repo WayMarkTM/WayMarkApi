@@ -4,8 +4,9 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models');
+var passport = require('passport');
 
-router.get('/', function (req, res){
+router.get('/', passport.authenticate('bearer', { session: false }), function (req, res){
     models.Point.findAll({
         include: [ models.LocalizedPoint ]
     }).then(function(points) {

@@ -4,7 +4,10 @@ var router = express.Router();
 var FileService = require('../services/fileService');
 var path = require('path');
 
-/* GET home page. */
+router.get('/login',  function(req, res, next) {
+  res.sendFile(path.join(__dirname, '../public/pages/login.html'));
+});
+
 router.get('/country', function(req, res, next) {
   res.sendFile(path.join(__dirname, '../public/pages/country.html'));
 });

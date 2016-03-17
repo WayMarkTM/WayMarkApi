@@ -36,6 +36,9 @@ waymarkApp.utilities.ajaxHelper = (function (jQuery, t) {
             jQuery.extend(params, ajaxOptions);
             jQuery.ajax({
                 url: ajaxOptions.url,
+                beforeSend: function (req) {
+                    req.setRequestHeader("Authorization", "Bearer 12345")
+                },
                 type: type,
                 data: ajaxOptions.data,
                 traditional: params.traditional,
@@ -44,6 +47,12 @@ waymarkApp.utilities.ajaxHelper = (function (jQuery, t) {
                 cache: params.cache
             }).done(function (result) {
                 if (result) {
+                    if (result.isNotAuthenticated && result.redirectTo) {
+                        window.location.href = result.redirectTo;
+                        d.resolve();
+                        return;
+                    }
+
                     d.resolve(result);
                 } else {
                     d.reject(result);
@@ -67,3 +76,48 @@ waymarkApp.utilities.ajaxHelper = (function (jQuery, t) {
         }
     };
 })($, toastr);
+
+waymarkApp.namespace('waymarkApp.utilities.cookieHelper');
+waymarkApp.utilities.cookieHelper = (function () {
+    return {
+        getCookie: function(name) {
+            var matches = document.cookie.match(new RegExp(
+                "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(matches[1]) : undefined;
+        },
+        setCookie: function (name, value, options) {
+            options = options || {};
+
+            var expires = options.expires;
+
+            if (typeof expires == "number" && expires) {
+                var d = new Date();
+                d.setTime(d.getTime() + expires * 1000);
+                expires = options.expires = d;
+            }
+            if (expires && expires.toUTCString) {
+                options.expires = expires.toUTCString();
+            }
+
+            value = encodeURIComponent(value);
+
+            var updatedCookie = name + "=" + value;
+
+            for (var propName in options) {
+                updatedCookie += "; " + propName;
+                var propValue = options[propName];
+                if (propValue !== true) {
+                    updatedCookie += "=" + propValue;
+                }
+            }
+
+            document.cookie = updatedCookie;
+        },
+        deleteCookie: function (name) {
+            setCookie(name, "", {
+                expires: -1
+            })
+        }
+    };
+})();
